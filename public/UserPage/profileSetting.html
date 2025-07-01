@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Setting</title>
+    <link rel="stylesheet" href="/frontend/public/AdminPage/profileSetting.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+          <img src="https://upload.wikimedia.org/wikipedia/km/e/ee/Rupp_logo.png?20090803154844" alt="RUPP Logo">
+          <div>Royal University of Phnom Penh</div>
+        </div>
+
+        <div class="nav">
+          <a href="homepage.html" class="nav-item">Home</a>
+          <a href="history.html" class="nav-item active">History</a>
+          <a href="setting.html" class="nav-item">Setting</a>
+          <a href="about-us.html" class="nav-item">About us</a>
+          <a href="service.html" class="nav-item">Service</a>
+        </div>
+    </div>
+
+    <!-- Profile Settings Page -->
+  <main id="profile" class="page active">
+    <section class="profile-container">
+      <section class="profile-left">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt08ADSBsRRxQ2xzvxjADA0SCVuwEwY6gASg&s" alt="Profile Picture">
+        <p>Your Profile</p>
+      </section>
+      <section class="profile-right">
+        <label>Name:
+          <input type="text" id="name" placeholder="Enter your name">
+        </label>
+        <label>Gmail:
+          <input type="email" id="email" placeholder="Enter your email">
+        </label>
+        <label>Position:
+          <input type="text" id="position" placeholder="Staff/Assistant/Student/Teacher">
+        </label>
+        <label>Department:
+          <input type="text" id="department" placeholder="Enter department">
+        </label>
+        <label>Password:
+          <input type="password" id="password" placeholder="Enter password">
+        </label>
+        <div class="buttons">
+          <button onclick="cancelForm()">Cancel</button>
+          <button onclick="confirmForm()">Confirm</button>
+        </div>
+      </section>
+    </section>
+  </main>
+  <script>
+        function cancelForm() {
+            if(confirm('Are you sure you want to cancel? All changes will be lost.')) {
+            document.querySelectorAll('#profile input').forEach(input => {
+                input.value = '';
+            });
+            }
+        }
+
+        function confirmForm() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const position = document.getElementById('position').value;
+            const department = document.getElementById('department').value;
+            const password = document.getElementById('password').value;
+
+            if (!name || !email || !position || !department || !password) {
+            alert('Please fill in all required fields');
+            return;
+            }
+
+            // Store in localStorage
+            localStorage.setItem('userProfile', JSON.stringify({
+            name, email, position, department, password
+            }));
+
+            alert('Profile updated successfully!');
+            window.location.href = 'setting.html'; // Go back to the settings page
+        }
+    </script>
+
+</body>
+</html>

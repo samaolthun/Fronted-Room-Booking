@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Booking Detail</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/frontend/public/UserPage/booking-detail.css">
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- Top Navigation Bar -->
+    <div class="header">
+        <div class="logo">
+          <img src="https://upload.wikimedia.org/wikipedia/km/e/ee/Rupp_logo.png?20090803154844" alt="RUPP Logo">
+          <div>Royal University of Phnom Penh</div>
+        </div>
+
+        <div class="nav">
+          <a href="homepage.html" class="nav-item">Home</a>
+          <a href="history.html" class="nav-item">History</a>
+          <a href="setting.html" class="nav-item">Setting</a>
+          <a href="about-us.html" class="nav-item active">About us</a>
+          <a href="service.html" class="nav-item">Service</a>
+        </div>
+    </div>
+
+  <!-- Booking Detail Section -->
+  <main class="max-w-2xl mx-auto mt-10 px-4">
+    <h2 class="text-2xl font-bold mb-6">Booking Detail</h2>
+
+    <div class="bg-white shadow-md rounded-md p-6 space-y-4">
+      <div class="text-lg font-medium">📍 Building STEM</div>
+      <div class="text-gray-700">🏢 Room 206</div>
+      <div class="text-gray-700">📅 Date: 01/May/2025</div>
+      <div class="text-gray-700">⏰ Time: 8:00 AM - 11:00 AM</div>
+    </div>
+
+    <div class="flex justify-end mt-6">
+      <a href="history.html " onclick="return confirm('Are you sure you want to cancel this booking?')">Cancel</a>
+    </div>
+  </main>
+
+</body>
+</html>

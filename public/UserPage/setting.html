@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Setting</title>
+  <link rel="stylesheet" href="setting.css">
+
+</head>
+
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">
+      <img src="https://upload.wikimedia.org/wikipedia/km/e/ee/Rupp_logo.png?20090803154844" alt="RUPP Logo">
+      <div>Royal University of Phnom Penh</div>
+    </div>
+
+    <div class="nav">
+      <a href="homepage.html" class="nav-item">Home</a>
+      <a href="history.html" class="nav-item">History</a>
+      <a href="setting.html" class="nav-item active">Setting</a>
+      <a href="about-us.html" class="nav-item">About us</a>
+      <a href="service.html" class="nav-item">Service</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-container">
+    <div class="profile-card">
+      <!-- Profile Image and Title -->
+      <div class="flex flex-col items-center">
+        <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="Profile" class="profile-image">
+        <h2 class="profile-title">Your Profile</h2>
+      </div>
+
+      <!-- Profile Info -->
+      <div class="profile-info">
+        <div class="info-row"><span class="label">Name:</span><span id="nameValue">THUN SAMAOL</span></div>
+        <div class="info-row"><span class="label">Gmail:</span><span id="emailValue">thun.samol.3623@rupp.edu.kh</span></div>
+        <div class="info-row"><span class="label">Position:</span><span id="positionValue">Student</span></div>
+        <div class="info-row"><span class="label">Department:</span><span id="departmentValue">Data Science and Engineering</span></div>
+        <div class="info-row"><span class="label">Password:</span><span id="passwordValue">************</span></div>
+
+        <button onclick="window.location.href='profileSetting.html'" class="edit-button">Edit Profile</button>
+        <div id="message" class="mt-4 hidden px-4 py-2 rounded text-center"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const data = JSON.parse(localStorage.getItem('userProfile'));
+
+      if (data) {
+        document.getElementById('nameValue').textContent = data.name;
+        document.getElementById('emailValue').textContent = data.email;
+        document.getElementById('positionValue').textContent = data.position;
+        document.getElementById('departmentValue').textContent = data.department;
+        document.getElementById('passwordValue').textContent = '*'.repeat(data.password.length);
+      }
+    });
+  </script>
+
+</body>
+</html>
