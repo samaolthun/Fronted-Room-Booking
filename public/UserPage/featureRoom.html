@@ -712,7 +712,7 @@
                         </div>
                         <div class="room-footer">
                             <button class="book-btn" ${room.available ? '' : 'disabled'} 
-                                onclick="window.location.href='booking.html?roomId=${room.id}'">
+                                onclick="redirectToBooking(${room.id})">
                                 ${room.available ? 'Book Now' : 'Unavailable'}
                             </button>
                         </div>
@@ -721,6 +721,18 @@
                 grid.appendChild(roomCard);
             });
         }
+
+        <!-- Pass room Information directly to Booking page -->
+        function redirectToBooking(roomId) {
+            const room = rooms.find(r => r.id === roomId);
+            if (room) {
+                const date = document.getElementById('date').value;
+                const time = document.getElementById('time').value;
+                const url = `booking.html?building=${encodeURIComponent(room.location.split(',')[0].trim())}&room=${encodeURIComponent(room.location.split(',')[1].trim())}&date=${date}&time=${time}`;
+                window.location.href = url;
+            }
+        }
+
 
         function searchRooms() {
             const roomType = document.getElementById('room-type').value;

@@ -166,6 +166,40 @@
             buildingSelect.addEventListener('change', updateRoomOptions);
             roomSelect.addEventListener('change', updateRoomDetails);
         });
+
+        <!-- pass the room's information to refill the inputform from featureRoom.html  -->
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const building = getQueryParam('building');
+            const room = getQueryParam('room');
+            const date = getQueryParam('date');
+            const time = getQueryParam('time');
+
+            if (building) {
+                const buildingSelect = document.getElementById('buildingSelect');
+                buildingSelect.value = building;
+                buildingSelect.dispatchEvent(new Event('change'));
+
+                setTimeout(() => {
+                    const roomSelect = document.getElementById('roomSelect');
+                    roomSelect.value = room;
+                    roomSelect.dispatchEvent(new Event('change'));
+                }, 200); // Give time for room options to load
+            }
+
+            if (date) {
+                document.getElementById('dateInput').value = date;
+            }
+
+            if (time) {
+                document.getElementById('startTime').value = time;
+            }
+        });
+
     </script>
 </body>
 </html>
