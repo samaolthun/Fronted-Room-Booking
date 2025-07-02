@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Booking System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="booking.css">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/km/e/ee/Rupp_logo.png?20090803154844" alt="RUPP Logo">
+            <div>Royal University of Phnom Penh</div>
+        </div>
+        <div class="nav">
+            <a href="featureRoom.html" class="nav-item">Home</a>
+            <a href="booking.html" class="nav-item active">Booking</a>
+            <a href="booked.html" class="nav-item">Booked</a>
+            <a href="setting.html" class="nav-item">Setting</a>
+            <a href="about-us.html" class="nav-item">About us</a>
+            <a href="service.html" class="nav-item">Service</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <div class="section">
+                <div class="section-title">Building</div>
+                <div class="dropdown-container">
+                    <select id="buildingSelect" class="form-control">
+                        <option disabled selected>Select Building</option>
+                        <option>Building A</option>
+                        <option>Building STEM</option>
+                    </select>
+                </div>
+            </div>
+            <div class="section">
+                <div class="section-title">Room</div>
+                <div class="dropdown-container">
+                    <select id="roomSelect" class="form-control">
+                        <option disabled selected>Select Room</option>
+                    </select>
+                </div>
+            </div>
+            <div class="section">
+                <div class="section-title">View Room</div>
+                <div class="view-container">
+                    <div class="room-info" id="roomInfo">
+                        <i class="fas fa-map-location-dot"></i>
+                        <span>Select a room</span>
+                    </div>
+                    <div class="status-container" id="roomStatus">
+                        <span class="status">Status Unknown</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="date-selector">
+                <div class="section-title">Date</div>
+                <input type="date" id="dateInput" class="form-control">
+            </div>
+            <div class="date-selector">
+                <div class="section-title">Time</div>
+            </div>
+            <div class="time-container">
+                <input type="time" id="startTime" class="form-control">
+                <input type="time" id="endTime" class="form-control">
+            </div>
+            <div class="form-group">
+                <div class="section-title">Purpose</div>
+                <select class="form-control">
+                    <option selected disabled>Select booking purpose</option>
+                    <option>Lecture</option>
+                    <option>Meeting</option>
+                    <option>Workshop</option>
+                    <option>Conference</option>
+                    <option>Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <div class="section-title">Number of Attendees</div>
+                <input type="number" class="form-control" placeholder="Enter expected number of attendees" min="1">
+            </div>
+            <button class="booking-btn" id="bookingBtn">
+                <i class="fas fa-calendar-check"></i> Book Now
+            </button>
+        </div>
+    </div>
+
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-icon">
+                <i class="fas fa-calendar-check"></i>
+            </div>
+            <div class="modal-header">
+                <h3>Confirm Booking</h3>
+                <p>Please review the details of your booking</p>
+            </div>
+            <div class="modal-details">
+                <div class="detail-item">
+                    <span class="detail-label">Building:</span>
+                    <span class="detail-value">Building A</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Room:</span>
+                    <span class="detail-value">Room 206</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Date:</span>
+                    <span class="detail-value">27th June, 2023</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Time:</span>
+                    <span class="detail-value">8:00 AM - 10:00 AM</span>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn confirm-btn">Confirm</button>
+                <button class="modal-btn cancel-btn" id="cancelBtn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const rooms = [
+            { name: "Conference Room A", location: "Building A, Room 201", capacity: 20, available: true },
+            { name: "Computer Lab 1", location: "Building A, Room 206", capacity: 30, available: true },
+            { name: "Lecture Hall", location: "Building A, Room 101", capacity: 100, available: false },
+            { name: "Chemistry Lab", location: "Building STEM, Room 309", capacity: 8, available: true },
+            { name: "Science Lab", location: "Building STEM, Room 205", capacity: 25, available: true },
+            { name: "Meeting Room C", location: "Building STEM, Room 709", capacity: 12, available: true }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const buildingSelect = document.getElementById('buildingSelect');
+            const roomSelect = document.getElementById('roomSelect');
+            const roomInfo = document.getElementById('roomInfo').querySelector('span');
+            const roomStatus = document.getElementById('roomStatus').querySelector('.status');
+
+            function updateRoomOptions() {
+                const building = buildingSelect.value;
+                const filtered = rooms.filter(r => r.location.includes(building));
+                roomSelect.innerHTML = '<option disabled selected>Select Room</option>';
+                filtered.forEach(room => {
+                    const parts = room.location.split(', ');
+                    const roomOption = document.createElement('option');
+                    roomOption.textContent = parts[1];
+                    roomSelect.appendChild(roomOption);
+                });
+            }
+
+            function updateRoomDetails() {
+                const building = buildingSelect.value;
+                const room = roomSelect.value;
+                const selected = rooms.find(r => r.location.includes(building) && r.location.includes(room));
+                if (selected) {
+                    roomInfo.textContent = selected.location;
+                    roomStatus.textContent = selected.available ? 'Available' : 'Unavailable';
+                    roomStatus.className = `status ${selected.available ? 'available' : 'unavailable'}`;
+                }
+            }
+
+            buildingSelect.addEventListener('change', updateRoomOptions);
+            roomSelect.addEventListener('change', updateRoomDetails);
+        });
+    </script>
+</body>
+</html>

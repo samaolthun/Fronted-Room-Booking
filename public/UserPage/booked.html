@@ -23,75 +23,72 @@
       color: #000;
     }
 
+    /* Header Styles */
     .header {
-      background-color: var(--primary-color);
-      color: white;
-      padding: 12px 15px;
-      display: flex;
-      align-items: center;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      position: sticky;
-      top: 0;
-      z-index: 100;
+        background-color: var(--primary-color);
+        color: white;
+        padding: 12px 15px;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
     }
-
+        
     .logo {
-      display: flex;
-      align-items: center;
+        display: flex;
+        align-items: center;
     }
 
     .logo img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      margin-right: 10px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
     }
-
-    .logo div {
-      font-size: 18px;
-      font-weight: bold;
-    }
-
     .nav {
-      margin-left: auto;
-      display: flex;
-      flex-wrap: wrap;
+        margin-left: auto;
+        display: flex;
     }
 
-    .nav a {
-      text-decoration: none;
-      color: inherit;
+    .nav a{
+        text-decoration: none;
+        color: inherit;
     }
 
     .nav-item {
-      padding: 12px 16px;
-      cursor: pointer;
-      text-align: center;
-      position: relative;
-      transition: var(--transition);
-      font-weight: 500;
+        padding: 12px 24px;
+        cursor: pointer;
+        text-align: center;
+        position: relative;
+        transition: var(--transition);
+        font-weight: 500;
     }
 
-    .nav-item:hover,
-    .nav-item.active {
-      color: var(--accent-color);
+    .nav-item:hover {
+        color: var(--accent-color);
     }
 
     .nav-item::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 3px;
-      bottom: 0;
-      left: 50%;
-      background-color: var(--accent-color);
-      transition: var(--transition);
-      transform: translateX(-50%);
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 3px;
+        bottom: 0;
+        left: 50%;
+        background-color: var(--accent-color);
+        transition: var(--transition);
+        transform: translateX(-50%);
     }
 
-    .nav-item:hover::after,
-    .nav-item.active::after {
-      width: 70%;
+    .nav-item:hover::after {
+        width: 70%;
+    }  
+
+    .active {
+        color: var(--primary-color);
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
     }
 
     main {
@@ -197,11 +194,12 @@
       <p>Royal University of Phnom Penh</p>
     </div>
     <div class="nav">
-      <a href="homepage.html" class="nav-item">Home</a>
-      <a href="history.html" class="nav-item active">History</a>
-      <a href="setting.html" class="nav-item">Setting</a>
-      <a href="about-us.html" class="nav-item">About us</a>
-      <a href="Service.html" class="nav-item">Service</a>
+      <a href="featureRoom.html" class="nav-item">Home</a>
+          <a href="booking.html" class="nav-item ">Booking</a>
+          <a href="booked.html" class="nav-item active">Booked</a>
+          <a href="setting.html" class="nav-item">Setting</a>
+          <a href="about-us.html" class="nav-item">About us</a>
+          <a href="service.html" class="nav-item">Service</a>
     </div>
   </div>
 

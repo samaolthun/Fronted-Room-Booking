@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal University of Phnom Penh - Room Booking</title>
+    <!-- boostrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+   
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+        --primary-color: #003366;
+        --accent-color: #ffcc00;
+        --transition: 0.3s ease;
+        }
+
+        * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        }
+
+        body {
+        font-family: 'Georgia', serif;
+        background-color: #fff;
+        color: #000;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+            
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .nav {
+            margin-left: auto;
+            display: flex;
+        }
+
+        .nav a{
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .nav-item {
+            padding: 12px 24px;
+            cursor: pointer;
+            text-align: center;
+            position: relative;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 50%;
+            background-color: var(--accent-color);
+            transition: var(--transition);
+            transform: translateX(-50%);
+        }
+
+        .nav-item:hover::after {
+            width: 70%;
+        }
+
+        .active {
+            color: var(--primary-color);
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        .active::after {
+            width: 70%;
+            background-color: var(--accent-color);
+        }
+
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjo8mYvh4Aw3OAHw106Xm65KEoG-W6d2RAV-2jSSX4xpvWCBwCErMJJ6I_Xkv-CY0eABSLZ7MqUqxCA-OKGXDyAbKMWL855-nOgI1fo2dWKm9qqnoTcnu4aYw-eDILaP4LwBbwuP68haqU/s1600/RUPP-Royal-University-of-Phnom-Penh1.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-content h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: #3498db;
+        }
+
+        /* Search and Filter */
+        .search-filter {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            padding: 0.8rem;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .filter-group input:focus,
+        .filter-group select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .search-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            justify-self: end;
+        }
+
+        .search-btn:hover {
+            background: #2980b9;
+        }  
+        .map-btn {
+            background: #e6c54c;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            justify-self: end;
+        }
+
+        .map-btn:hover {
+            background: #3aec40;
+        }   
+
+        /* Room Grid */
+        .rooms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .room-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .room-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .room-image {
+            height: 200px;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .room-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://www.rupp.edu.kh/fe/factor4.0/images/desk_and_chairs_are_installed_beforePCarrived1.jpg');
+            background-size: cover;
+            opacity: 0.8;
+        }
+
+        .room-info {
+            padding: 1.5rem;
+        }
+
+        .room-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .room-location {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .room-features {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .feature-tag {
+            background: #ecf0f1;
+            color: #2c3e50;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .room-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .room-price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #3498db;
+        }
+
+        .book-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .book-btn:hover {
+            background: #219a52;
+        }
+
+        .book-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .modal h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            height: 80px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background: #2980b9;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-menu {
+                gap: 1rem;
+            }
+
+            .hero-content h2 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            .rooms-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .map-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 0px;
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        /* -------------------------------------------------- */
+        .card-map{
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 25px;
+            margin: 1px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        .card-map:hover {
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+        }
+        .card:hover {
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">
+          <img src="https://upload.wikimedia.org/wikipedia/km/e/ee/Rupp_logo.png?20090803154844" alt="RUPP Logo">
+          <div>Royal University of Phnom Penh</div>
+        </div>
+
+        <div class="nav">
+          <a href="featureRoom.html" class="nav-item active">Home</a>
+          <a href="booking.html" class="nav-item ">Booking</a>
+          <a href="booked.html" class="nav-item">Booked</a>
+          <a href="setting.html" class="nav-item">Setting</a>
+          <a href="about-us.html" class="nav-item">About us</a>
+          <a href="service.html" class="nav-item">Service</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Room Booking System</h2>
+            <p>Find and book the perfect room for your needs</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <h2 class="section-title">Featured Rooms</h2>
+        
+        <!-- Search and Filter -->
+        <div class="search-filter">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="room-type">Room Type</label>
+                    <select id="room-type">
+                        <option value="">All Types</option>
+                        <option value="conference">Conference Room</option>
+                        <option value="classroom">Classroom</option>
+                        <option value="lab">Laboratory</option>
+                        <option value="auditorium">Auditorium</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="capacity">Capacity</label>
+                    <select id="capacity">
+                        <option value="">Any Size</option>
+                        <option value="1-10">1-10 people</option>
+                        <option value="11-25">11-25 people</option>
+                        <option value="26-50">26-50 people</option>
+                        <option value="51+">51+ people</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="date">Date</label>
+                    <input type="date" id="date">
+                </div>
+                <div class="filter-group">
+                    <label for="time">Time</label>
+                    <input type="time" id="time">
+                </div>
+            </div>
+            <button class="search-btn" onclick="searchRooms()"><i class="bi bi-search"></i> Search Rooms</button>
+            <button class="map-btn" onclick="scrollToMap()"> <i class="bi bi-map"></i> Exploring the Map</button>
+
+        </div>
+
+        <!-- Rooms Grid -->
+        <div class="rooms-grid" id="rooms-grid">
+            <!-- Rooms will be populated by JavaScript -->
+        </div>
+    </main>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Book Room</h3>
+            <form id="bookingForm">
+                <div class="form-group">
+                    <label for="studentName">Student Name</label>
+                    <input type="text" id="studentName" required>
+                </div>
+                <div class="form-group">
+                    <label for="studentId">Student ID</label>
+                    <input type="text" id="studentId" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="bookingDate">Date</label>
+                    <input type="date" id="bookingDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="startTime">Start Time</label>
+                    <input type="time" id="startTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="endTime">End Time</label>
+                    <input type="time" id="endTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="purpose">Purpose</label>
+                    <textarea id="purpose" placeholder="Describe the purpose of your booking..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit Booking</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- map -->
+    <!-- <div class="map-container" id="map-section">
+        <div class="card-map">
+            <img src="https://scontent.fpnh2-1.fna.fbcdn.net/v/t1.6435-9/45685104_1734483090012227_7494844332407521280_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFSfGIZ4HFfbZ6yqjf2bByjoLlABriwuUmguUAGuLC5SYHWcuvPIOsm4arN2dfPN-n06CAracd4aU1ZbrQ0rQoc&_nc_ohc=IGYwZkXEWtwQ7kNvwFcD5sI&_nc_oc=AdkZXsfpKkqkL2QgebEbwJPE2V8V1m2zaJZ5YXgj17Z7cXb_YkS8L5EA7WOkwEufOU0&_nc_zt=23&_nc_ht=scontent.fpnh2-1.fna&_nc_gid=WE7J-HRlhzIQdqSlRbmZ7A&oh=00_AfIOvIQLRqnCnM8SQxTw21gkK6Z4gKwja1ivPwHZfGJ7kQ&oe=68670724" alt="">
+        </div>
+
+        <!-- <div class="card-map">
+            <div class="banner">
+                <div class="image"></div>
+            </div>
+        </div> -->
+    </div> -->
+    <div class="map-container" id="map-section">
+        <div class="card-map" style="height: 400px;">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15643.30349320412!2d104.8913298272962!3d11.569038957442536!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x310951b34a61de01%3A0x2deae1ccde6d64bb!2sRoyal%20University%20of%20Phnom%20Penh!5e0!3m2!1sen!2skh!4v1720083991234"
+                width="100%" 
+                height="100%" 
+                style="border:0; border-radius: 12px;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </div>
+
+
+    <script>
+        // Sample room data
+        const rooms = [
+            {
+                id: 1,
+                name: "Conference Room A",
+                location: "Building A, Room 201",
+                capacity: 20,
+                type: "conference",
+                features: ["Projector", "Whiteboard", "AC"],
+                available: true
+            },
+            {
+                id: 2,
+                name: "Computer Lab 1",
+                location: "Building A, Room 206",
+                capacity: 30,
+                type: "lab",
+                features: ["30 PCs", "Projector", "AC"],
+                available: true
+            },
+            {
+                id: 3,
+                name: "Lecture Hall ",
+                location: "Building A, Room 001",
+                capacity: 100,
+                type: "auditorium",
+                features: ["Sound System", "Projector", "AC"],
+                available: false
+            },
+            {
+                id: 4,
+                name: "Chemistry Lap",
+                location: "Building STEM, Room 309",
+                capacity: 8,
+                type: "classroom",
+                features: ["Whiteboard", "Quiet Zone"],
+                available: true
+            },
+            {
+                id: 5,
+                name: "Science Lab",
+                location: "Building STEM, Room 205",
+                capacity: 25,
+                type: "lab",
+                features: ["Lab Equipment", "Fume Hood", "AC"],
+                available: true
+            },
+            {
+                id: 6,
+                name: "Meeting Room C",
+                location: "Building STEM, Room 709",
+                capacity: 12,
+                type: "conference",
+                features: ["Video Conf", "Whiteboard", "AC"],
+                available: true
+            }
+        ];
+
+        // Initialize the page
+        let currentRooms = [...rooms];
+
+        function displayRooms(roomsToShow) {
+            const grid = document.getElementById('rooms-grid');
+            grid.innerHTML = '';
+
+            roomsToShow.forEach(room => {
+                const roomCard = document.createElement('div');
+                roomCard.className = 'room-card';
+                roomCard.innerHTML = `
+                    <div class="room-image"></div>
+                    <div class="room-info">
+                        <h3 class="room-title">${room.name}</h3>
+                        <p class="room-location">${room.location}</p>
+                        <div class="room-features">
+                            ${room.features.map(feature => `<span class="feature-tag">${feature}</span>`).join('')}
+                        </div>
+                        <div class="room-footer">
+                            <button class="book-btn" ${room.available ? '' : 'disabled'} 
+                                onclick="window.location.href='booking.html?roomId=${room.id}'">
+                                ${room.available ? 'Book Now' : 'Unavailable'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(roomCard);
+            });
+        }
+
+        function searchRooms() {
+            const roomType = document.getElementById('room-type').value;
+            const capacity = document.getElementById('capacity').value;
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+
+            let filteredRooms = rooms.filter(room => {
+                if (roomType && room.type !== roomType) return false;
+                if (capacity) {
+                    const [min, max] = capacity.includes('+') ? [51, Infinity] : capacity.split('-').map(Number);
+                    if (room.capacity < min || (max && room.capacity > max)) return false;
+                }
+                return true;
+            });
+
+            currentRooms = filteredRooms;
+            displayRooms(filteredRooms);
+        }
+
+        function scrollToMap() {
+            document.getElementById('map-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function openBookingModal(roomId) {
+            const room = rooms.find(r => r.id === roomId);
+            if (room && room.available) {
+                const modal = document.getElementById('bookingModal');
+                modal.style.display = 'block';
+                
+                // Set today's date as minimum
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('bookingDate').min = today;
+            }
+        }
+
+        // Modal functionality
+        const modal = document.getElementById('bookingModal');
+        const closeBtn = document.querySelector('.close');
+
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Form submission
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const bookingData = Object.fromEntries(formData);
+            
+            // Here you would typically send the data to your server
+            alert('Booking submitted successfully! You will receive a confirmation email shortly.');
+            modal.style.display = 'none';
+            this.reset();
+        });
+
+        // Initialize the page
+        displayRooms(currentRooms);
+
+        // Set current date as default
+        document.getElementById('date').value = new Date().toISOString().split('T')[0];
+    </script>
+</body>
+</html>
